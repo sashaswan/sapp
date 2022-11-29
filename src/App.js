@@ -1,27 +1,26 @@
 import './css/style.css';
-import test from './images/test.png'
+import Header from './components/Header/Header';
+import Main from './components/Main/Main';
+import Sidebar from './components/Main/Sidebar';
+import Footer from './components/Footer/Footer';
 
+const site = {
+  site_name: "react test",
+  site_title: "my first site with react",
+  nav: [
+    { "link": "nav1", "text": "my link" },
+    { "link": "nav2", "text": "my link 2" },
+    { "link": "nav3", "text": "my link 3" },
+  ]
+}
 function App() {
-
-  let text = 'test variable';
-  let text2 = '222'
-
-  const style = {
-    fontSize: '24px',
-    fontStyle: 'italic',
-    color: 'red'
-  }
 
   return (
     <>
-      <div className="container">
-        <h1><code style={style}>app_1</code></h1>
-        <img src={test} alt='testImage' />
-        <ul>
-          <li>Hello</li>
-          <li>{text + text2}</li>
-        </ul>
-      </div>
+      <Header data={site} />
+      <Main />
+      <Sidebar />
+      <Footer data={site} />
     </>
   );
 }
