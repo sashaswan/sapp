@@ -1,6 +1,11 @@
+import Sidebar from "./Sidebar"
+
 function Main(props) {
     return (
-        <p>Text example</p>
+        <>
+            <h1>Main Page</h1>
+            <Sidebar />
+        </>
     )
 }
 export default Main
