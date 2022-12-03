@@ -2,36 +2,45 @@ import React from 'react';
 import { useState } from 'react';
 function Main(props) {
     let valueIn = React.createRef();
-    const [output, setOutput] = useState('test');
+    const [output, setOut] = useState();
+    let f1 = () => {
+        let value = valueIn.current.value;
+        setOut(value)
+    }
+    const [count, setCount] = useState(0);
+    let f2 = () => {
+        let value = count;
+        value++
+        setCount(value)
+    }
+    const [outInput, setInputOut] = useState();
+    let f3 = (e) => {
+        let inputValue = e.target.value;
+        setInputOut(inputValue)
+    }
+    const [clickCount, setClickCount] = useState(0);
+    let f4 = () => {
+        let value = clickCount;
+        value++
+        setClickCount(value)
+    }
+    const [check, setCheck] = useState();
+    let f5 = (e) => {
+        let value = e.target.checked
+        if (value === true) {
+            setCheck(1)
+        }
+        else {
+            setCheck(0)
+        }
+    }
+    const [selectValue, setSelectValue] = useState();
+    let f6 = (e) => {
+        let value = e.target.value;
+        setSelectValue(value);
+    }
     const [colorNow, setColor] = useState();
-    let saveValue = React.createRef();
-    const [out, setOut] = useState();
-    let setRange = React.createRef();
-    let pushNumber = React.createRef();
-    const [out9, setOut9] = useState();
-    function f1() {
-        console.log('task2')
-    }
-    function f2(e) {
-        e.target.className = "active";
-    }
-    function f3(e) {
-        console.log(e.target.value);
-    }
-    let count = 0;
-    function f4() {
-        return (
-            console.log(count++)
-        )
-    }
-    function f5(e) {
-        let out = document.querySelector('.out5');
-        out.innerHTML = e.target.checked;
-    }
-    function f6() {
-        setOutput(valueIn.current.value);
-    }
-    function f7() {
+    let f7 = () => {
         let min = 0;
         let max = 255;
         let r = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -40,54 +49,75 @@ function Main(props) {
         let color = `rgb(${r}, ${g}, ${b})`
         setColor(color)
     }
+    const [number, setNumber] = useState();
     function f8(e) {
-        if(e.charCode >= 48 && e.charCode <= 57 ){
-            setOut('1')
+        if (e.charCode >= 48 && e.charCode <= 57) {
+            setNumber('1')
         }
         else {
-            setOut('0')
+            setNumber('0')
         }
     }
-    function f9() {
-        setOut9(setRange.current.value);
+    const [out9, setRange] = useState();
+    function f9(e) {
+        setRange(e.target.value);
     }
-    let arr = [];
-    function f10() {
-        arr.push(+pushNumber.current.value);
-        console.log(arr);
+
+    // const f10 = React.createRef();
+    const [value10, setValue10] = useState();
+    const [st10, setSt10] = useState([]);
+    function task10() {
+        setSt10((curr) => [...curr, value10])
+        setValue10('');
     }
+
     return (
         <>
-            <h1>Main Page</h1>
-            <h2>Task 1</h2>
-            <button className="task-1" onClick={f1}>go go</button>
-            <h2>Task 2</h2>
-            <div onMouseEnter={f2} className='task2'>--------</div>
-            <h2>Task 3</h2>
-            <input type='text' onInput={f3} />
-            <h2>Task 4</h2>
-            <button className="task-4" onClick={f4}>go go</button>
-            <h2>Task 5</h2>
-            <input type='checkbox' onChange={f5} />
-            <div className="out5"></div>
-            <h2>Task 6</h2>
-            <select className="task6" onChange={f6} ref={valueIn}>
-                <option>1</option>
-                <option>2</option>
-            </select>
-            <div className="out6">{output}</div>
-            <h2>Task 7</h2>
-            <div style={{ background: colorNow }} className="block-7" ></div>
-            <button onClick={f7} className="task-7">Color</button>
-            <h2>Task 8</h2>
-            <input type='text' onKeyPress={f8} ref={saveValue} />
-            <div className="out8">{out}</div>
-            <h2>Task 9</h2>
-            <input type='range' onInput={f9} ref={setRange}/>
-            <div className="out9">{out9}</div>
-            <h2>Task 10</h2>
-            <input type='text' ref={pushNumber} />
-            <button className='task10' onClick={f10}>go go</button>
+            <input ref={valueIn} />
+            <button className='btn1' onClick={f1}>go go</button>
+            {output}
+            <section>
+                <div className='block2' onMouseEnter={f2} style={{ width: "100px", height: '100px', background: 'black' }}></div>
+                {count}
+            </section>
+            <section>
+                <input onInput={f3} />
+                {outInput}
+            </section>
+            <section>
+                <button onClick={f4}>go go go </button>
+                {clickCount}
+            </section>
+            <section>
+                <input type="checkbox" onChange={f5} />
+                {check}
+            </section>
+            <section>
+                <select onChange={f6}>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+                {selectValue}
+            </section>
+            <section>
+                <button onClick={f7}>color</button>
+                <div className='block7' style={{ width: "100px", height: '100px', background: colorNow }}></div>
+            </section>
+            <section>
+                <input type='text' onKeyPress={f8} />
+                {number}
+            </section>
+            <section>
+                <input type='range' onInput={f9} />
+                {out9}
+            </section>
+            <section>
+                <h2>Task 10</h2>
+                <input type="text" className="i-10" onChange={(e) => setValue10(e.target.value)} value={value10}></input>
+                <button onClick={task10} className="task-10">Push</button>
+                <div>{st10}</div>
+            </section>
         </>
     )
 }
