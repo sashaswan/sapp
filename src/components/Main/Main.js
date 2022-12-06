@@ -1,20 +1,40 @@
 import React from 'react';
 import { useState } from 'react';
 function Main(props) {
-
-    const [s1, setS1] = useState(0)
-    const [s2, setS2] = useState(0)
-    let f1 = () => {
-        let newS1 = s1 + 5;
-        let newS2 = s2 + 5;
-        setS1(newS1)
-        setS2(newS2)
-        console.log(newS1 + ' changed')
-        console.log(newS2 + ' changed')
+    const cE = React.createElement
+    const h1 = cE('h1', {}, 'header 2')
+    const h2 = cE('h1', {
+        style: {
+            'color': 'orange'
+        }
+    }, 'header 2')
+    const p = cE('p', { 'className': 'text-color' }, 'header 2')
+    const input = cE('input', { 'defaultValue': 55 })
+    const p1 = cE('p', {}, 'hi')
+    const p2 = cE('p', {}, 'world')
+    const div = cE('div', { 'className': 'text-gray' }, p1, p2)
+    
+    const [value, setValue] = useState();
+    const [out, seOut] = useState([]);
+    function f1() {
+        seOut((curr) => [...curr, value])
+        setValue('');
     }
+    const input2 = cE('input', { onChange: (e) => setValue(e.target.value)})
+    const button = cE('button', { onClick: f1 }, 'go')
+
+
+   
     return (
         <>
-            <button onClick={f1}>go go</button>
+            {h1}
+            {h2}
+            {p}
+            {input}
+            {div}
+            {input2}
+            {button}
+            {out}
         </>
     )
 }
