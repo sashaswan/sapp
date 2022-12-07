@@ -1,41 +1,32 @@
 import React from 'react';
-import { useState } from 'react';
-function Main(props) {
-    const cE = React.createElement
-    const h1 = cE('h1', {}, 'header 2')
-    const h2 = cE('h1', {
-        style: {
-            'color': 'orange'
-        }
-    }, 'header 2')
-    const p = cE('p', { 'className': 'text-color' }, 'header 2')
-    const input = cE('input', { 'defaultValue': 55 })
-    const p1 = cE('p', {}, 'hi')
-    const p2 = cE('p', {}, 'world')
-    const div = cE('div', { 'className': 'text-gray' }, p1, p2)
-    
-    const [value, setValue] = useState();
-    const [out, seOut] = useState([]);
-    function f1() {
-        seOut((curr) => [...curr, value])
-        setValue('');
+import { useState, useEffect } from 'react';
+import CommentListHook from '../Comments/CommentListHook';
+import PostListHook from '../Post/PostListHook';
+export default function Main(props) {
+    const [data, setData] = useState([])
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/users/1/posts')
+            .then(response => response.json())
+            .then(data => setData(data))
+    }, [])
+    const [comments, setComments] = useState([])
+    function f1(e) {
+        let value = e.target.value
+        fetch(`https://jsonplaceholder.typicode.com/posts/${value}/comments`)
+            .then(response => response.json())
+            .then(comments => setComments(comments))
     }
-    const input2 = cE('input', { onChange: (e) => setValue(e.target.value)})
-    const button = cE('button', { onClick: f1 }, 'go')
-
-
-   
     return (
         <>
-            {h1}
-            {h2}
-            {p}
-            {input}
-            {div}
-            {input2}
-            {button}
-            {out}
+            <PostListHook data={data} />
+            <h1>Comments</h1>
+            <select onChange={f1}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            <CommentListHook comments={comments} />
         </>
     )
 }
-export default Main
